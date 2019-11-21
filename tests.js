@@ -2,8 +2,38 @@ var mocha = require('mocha')
 var calculateScore = require('./scoring').calculateScore
 var expect = require('chai').expect
 var { describe, it } = mocha
+var calculateRushingScore = require('./scoring').calculateRushingScore
+console.log(calculateRushingScore)
 
 describe('Scoring', function () {
+  it('Calculates the total rushing score', () => {
+    let players = [{
+        position: 'RB',
+        expectedRushingScore: 19.3,
+        stats: {
+        rushing:  { attempts: 18, yards: 103, touchdowns: 2, fumbles: 1 }
+        }
+    },{
+      position: 'QB',
+      expectedRushingScore: 5.2,
+      stats: {
+        rushing:{ attempts: 3, yards: 22, touchdowns: 1, fumbles: 1 }
+      }
+    }]
+
+    for(let i= 0; i < players.length ; i++){
+      let player = players[i]
+      let points = calculateRushingScore(player)
+      expect(points).to.equal(player.expectedRushingScore)
+      console.log(points)
+    }
+
+    
+  })
+
+
+
+
   it('returns the score for a quarterback', function () {
     var player = {
       name: 'Patrick Mahomes',
